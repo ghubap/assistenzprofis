@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>AP AssistenzProfis – Ziemlich beste Assistenz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --ap-blue: #007bff;
+      --ap-orange: #f39c12;
+      --ap-teal: #2ba6a4;
+      --bg-light: #f7f8fc;
+      --bg-dark: #111827;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --white: #ffffff;
+      --shadow-soft: 0 10px 25px rgba(15,23,42,0.08);
+      --radius-lg: 18px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { max-width: 100%; display: block; }
+
+    /* Layout */
+    .page {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e0f2fe, transparent 55%),
+                  radial-gradient(circle at bottom right, #e0f7f4, transparent 55%);
+    }
+
+    .max-w {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Top bar: logo + claim */
+    .top-bar {
+      padding: 1rem 0 0.4rem;
+    }
+
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* LOGO KORREKTUR: Links-bündig + Text direkt daneben + KLEIN/ABGERUNDET/SCHATTEN */
+    .logo-frame {
+      width: 160px;        /* Kleiner */
+      height: 80px;        /* Kleiner */
+      background: white;
+      border-radius: 12px; /* Abgerundet */
+      box-shadow: 
+        0 8px 20px rgba(0,0,0,0.15),    /* Stärkerer Schatten */
+        0 3px 8px rgba(0,123,255,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+      padding: 8px;        /* Kleinerer Padding */
+      /* margin: 0 auto 0.5rem; ← ENTFERNT für links-bündig */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Subtiler Glow-Effekt für Niklas (Orange) */
+    .logo-frame::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 45px;
+      height: 45px;
+      background: radial-gradient(circle, rgba(243,156,18,0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    .logo-frame img {
+      height: 60px;        /* Kleiner */
+      width: auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    .brand-text-main {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ap-blue);
+    }
+
+    .brand-text-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Sticky nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15,23,42,0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.35);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.55rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .nav-links a {
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      color: #e5e7eb;
+    }
+
+    .nav-links a:hover {
+      background: rgba(148,163,184,0.26);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.active {
+      background: linear-gradient(90deg, var(--ap-orange), var(--ap-teal));
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-cta-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: transparent;
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta-btn span {
+      font-size: 1rem;
+    }
+
+    .nav-cta-btn.primary {
+      border: none;
+      background: linear-gradient(90deg, var(--ap-orange), var(--ap-teal));
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .nav-cta-btn:hover {
+      background: rgba(15,23,42,0.9);
+      color: var(--white);
+    }
+
+    .nav-cta-btn.primary:hover {
+      filter: brightness(1.05);
+    }
+
+    /* Mobile nav burger (visual only, no collapse logic) */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .nav-burger span {
+      width: 20px;
+      height: 2px;
+      border-radius: 999px;
+      background: #e5e7eb;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3.5rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 2.75rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ap-teal);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3.2vw, 2.8rem);
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, var(--ap-orange), var(--ap-teal));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.05);
+      color: #374151;
+      border: 1px solid rgba(148,163,184,0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .pill span {
+      font-size: 0.9rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 0.8rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--ap-orange), var(--ap-teal));
+      color: #111827;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(15,23,42,0.2);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #374151;
+      border: 1px solid rgba(148,163,184,0.8);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15,23,42,0.04);
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .stats-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .stats-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.1rem;
+    }
+
+    .stats-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .stats-tag {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.08);
+      color: #1d4ed8;
+    }
+
+    .stats-card.full {
+      grid-column: span 2;
+    }
+
+    .stats-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .stats-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--ap-orange), var(--ap-teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+      font-size: 1.1rem;
+    }
+
+    /* Section generic */
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    .section {
+      padding: 3.25rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.3rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ap-teal);
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0.3rem auto 0;
+    }
+
+    /* Über uns: Zeitstrahl */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .about-text p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .timeline {
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem 1.25rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--ap-orange), var(--ap-teal));
+      opacity: 0.8;
+    }
+
+    .tl-item {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: 7px;
+      top: 4px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 3px solid var(--ap-orange);
+      box-shadow: 0 0 0 4px rgba(249,115,22,0.18);
+    }
+
+    .tl-year {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ap-orange);
+      margin-bottom: 0.15rem;
+    }
+
+    .tl-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .tl-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Klient / -profi: cards */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .feature-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ap-teal);
+      font-weight: 600;
+    }
+
+    .feature-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .feature-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .feature-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+    }
+
+    .feature-tag {
+      font-size: 0.76rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.03);
+      color: #4b5563;
+      border: 1px dashed rgba(148,163,184,0.9);
+    }
+
+    .section-cta-center {
+      text-align: center;
+      margin-top: 2.3rem;
+    }
+
+    /* Testimonials */
+    .testimonials-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: "„";
+      position: absolute;
+      font-size: 4rem;
+      top: -16px;
+      left: 12px;
+      color: rgba(148,163,184,0.25);
+      pointer-events: none;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: #374151;
+      margin-bottom: 0.8rem;
+    }
+
+    .testimonial-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Kontakt */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      background: #020617;
+      color: #e5e7eb;
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-card p {
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-card a {
+      color: #e5e7eb;
+      text-decoration: underline;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .contact-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 0.7rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 1.6rem 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .about-grid,
+      .features-grid,
+      .testimonials-row,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero {
+        padding-top: 2.7rem;
+      }
+      .stats-grid {
+        order: -1;
+      }
+      .nav-inner {
+        padding-inline: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        display: none;
+      }
+      .nav-burger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Top bar: Logo + Claim -->
+  <div class="top-bar">
+    <div class="max-w top-bar-inner">
+      <div class="logo-wrap">
+        <div class="logo-frame">
+          <img src="ap3er_orig.png" alt="AP AssistenzProfis Logo">
+        </div>
+        <div>
+          <div class="brand-text-main">AP AssistenzProfis GmbH</div>
+          <div class="brand-text-sub">
+            Ziemlich beste Assistenz. 2016 von Betroffenen gegründet. Deutschlandweit tätig.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-burger" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#ueber">Über uns</a>
+        <a href="#klient">Klient werden</a>
+        <a href="#assistenzprofi">Assistent werden</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div class="nav-cta">
+        <button class="nav-cta-btn" onclick="scrollToId('assistenzprofi')">
+          <span>★</span>Jobs
+        </button>
+        <button class="nav-cta-btn primary" onclick="scrollToId('klient')">
+          Beratung starten
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="max-w hero-grid">
+      <div>
+        <div class="hero-eyebrow">Persönliche Assistenz – deutschlandweit</div>
+        <h1 class="hero-title">
+          <span>Ziemlich beste Assistenz</span><br>
+          aus eigener Erfahrung.
+        </h1>
+        <p class="hero-text">
+          AP AssistenzProfis hilft Menschen mit körperlicher Behinderung, ein selbstbestimmtes Leben in den eigenen vier Wänden zu führen – bereits seit 2016! Gegründet von Niklas Kampmann, der aufgrund seiner Behinderung von Geburt an weiß, wie sich jede Hürde anfühlt.
+        </p>
+        <div class="hero-pills">
+          <div class="pill"><span>●</span> Seit 2016</div>
+          <div class="pill"><span>●</span> Von Betroffenen gegründet</div>
+          <div class="pill"><span>●</span> deutschlandweit</div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToId('klient')">
+            Klient werden
+          </button>
+          <button class="btn btn-ghost" onclick="scrollToId('assistenzprofi')">
+            Assistent werden
+          </button>
+          <div class="hero-note">
+            Wir kümmern uns um alles - du verwirklichst dich.
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stats-card">
+          <div class="stats-label">Seit</div>
+          <div class="stats-value">2016</div>
+          <div class="stats-desc">Erfahrung im Aufbau von Assistenzteams und mit dem Persönlichen Budget.</div>
+          <div class="stats-tag">Gründung</div>
+        </div>
+        <div class="stats-card">
+          <div class="stats-label">Assistenten</div>
+          <div class="stats-value">250+</div>
+          <div class="stats-desc">Assistenten im Einsatz – von Minijob bis Vollzeit.</div>
+          <div class="stats-tag">Team</div>
+        </div>
+        <div class="stats-card full">
+          <div class="stats-label">Von Betroffenen gegründet</div>
+          <div class="stats-value">Vom Klienten zum Profi</div>
+          <div class="stats-desc">
+                       Gründer Niklas Kampmann lebt seit Geburt an mit Behinderung. Heute sorgt sein Team dafür, dass andere Menschen dieselbe Freiheit erleben.
+          </div>
+          <div class="stats-icon-row">
+            <div class="stats-icon">♥</div>
+            <div style="font-size:0.86rem;color:var(--text-muted);">
+              Authentische Assistenz statt Theorie – wir wissen aus eigener Praxis, was wirklich zählt.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS + Zeitstrahl -->
+  <section id="ueber" class="section">
+    <div class="max-w">
+      <div class="section-header">
+        <div class="section-eyebrow">Über uns</div>
+        <h2 class="section-title">Vom Klienten zum Assistenzdienst</h2>
+        <p class="section-sub">
+          AP AssistenzProfis ist ein inhabergeführter Assistenzdienst, der aus persönlicher Erfahrung entstanden ist – und heute bundesweit Assistenzteams aufbaut und begleitet.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            2016 haben Niklas Kampmann, mit angeborener körperlicher Behinderung und seine engsten Freunde AP AssistenzProfis gegründet. Die Idee: Ein Assistenzdienst, der nicht aus der Distanz plant, sondern aus der Perspektive von Menschen, die selbst Assistenz benötigen.
+          </p>
+          <p>
+            Heute leiten Niklas Kampmann und Can Agca als Geschäftsführer das Unternehmen. Gemeinsam mit rund 250 Assistenten unterstützen sie Klienten in ganz Deutschland – zu Hause, im Studium, im Job und in der Freizeit.
+          </p>
+          <p>
+            Wir beraten beim Persönlichen Budget, planen Assistenzteams, übernehmen die Abrechnung und sind rund um die Uhr ansprechbar. So bleibt mehr Energie für das, was wirklich zählt: Leben statt Papierkram.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2016</div>
+            <div class="tl-title">Gründung in Köln</div>
+            <div class="tl-body">
+              Ein Betroffener und seine engsten Freunde gründen AP AssistenzProfis, um Assistenz aus eigener Erfahrung zu organisieren. (Lies die ganze Story hier...)
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2018–2020</div>
+            <div class="tl-title">Erste Teams, erste Bundesländer</div>
+            <div class="tl-body">
+              Aufbau der ersten 20 Assistenzteams – Schwerpunkt NRW, später auch Rheinland-Pfalz, Hessen und Hamburg.
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2021–2023</div>
+            <div class="tl-title">Wachsen mit dem Persönlichen Budget</div>
+            <div class="tl-body">
+              Spezialisierung auf Persönliche Assistenz und Persönliches Budget, Einführung 24/7-Hotline für Klienten und Assistenten.
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">Heute</div>
+            <div class="tl-title">250+ Assistenten, deutschlandweit</div>
+            <div class="tl-body">
+              Bundesweit aktive Assistenzteams, laufende Erweiterung um neue Standorte – immer mit Fokus auf Selbstbestimmung und Teilhabe.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- Klient werden -->
+  <section id="klient" class="section">
+    <div class="max-w">
+      <div class="section-header">
+        <div class="section-eyebrow">Klient werden</div>
+        <h2 class="section-title">Unterstützung im Alltag – ohne Umwege zur Freiheit</h2>
+        <p class="section-sub">
+          Wir begleiten dich von der ersten Idee bis zum laufenden Assistenzteam. Unser Ziel: dein Alltag, dein Tempo, deine Entscheidungen.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-label">Schritt 1</div>
+          <div class="feature-title">Kostenlose Erstberatung</div>
+          <div class="feature-body">
+            Wir sprechen telefonisch oder per Video über deine Situation, deinen Unterstützungsbedarf und welche Ziele du mit Assistenz erreichen willst.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Unverbindlich</div>
+            <div class="feature-tag">In einfacher Sprache</div>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-label">Schritt 2</div>
+          <div class="feature-title">Persönliches Budget & Antrag</div>
+          <div class="feature-body">
+            Wir helfen bei Anträgen und beim Persönlichen Budget. Du musst keine Paragrafen kennen – wir kennen die Wege und Ansprechpartner.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Dokumente sortieren</div>
+            <div class="feature-tag">Formulare ausfüllen</div>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-label">Schritt 3</div>
+          <div class="feature-title">Assistenzteam aufbauen</div>
+          <div class="feature-body">
+            Gemeinsam suchen wir passende Assistentinnen und Assistenten, planen Dienste und begleiten dein Team im Alltag – fachlich und menschlich.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Assistentensuche & Auswahl</div>
+            <div class="feature-tag">Einarbeitung</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-cta-center">
+        <button class="btn btn-primary" onclick="scrollToId('kontakt')">
+          Kostenlose Erstberatung anfragen
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assistent werden -->
+  <section id="assistenzprofi" class="section">
+    <div class="max-w">
+      <div class="section-header">
+        <div class="section-eyebrow">Assistent werden</div>
+        <h2 class="section-title">Arbeit mit Sinn – auch ohne Vorerfahrung</h2>
+        <p class="section-sub">
+          Du begleitest einen Menschen mit Behinderung im Alltag, bei Freizeit, Haushalt oder Job. Wir kümmern uns um Einarbeitung, Dienstpläne und Bezahlung.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-label">Deine Vorteile</div>
+          <div class="feature-title">Fair, flexibel, nah am Menschen</div>
+          <div class="feature-body">
+            Übertarifliche Vergütung, Zuschläge für Nacht-, Sonn- und Feiertage, flexible Dienste und ein Team, das erreichbar ist, wenn du Unterstützung brauchst.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Übertariflich</div>
+            <div class="feature-tag">Zuschläge</div>
+            <div class="feature-tag">Deutschlandticket</div>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-label">Einstieg</div>
+          <div class="feature-title">Ohne Pflegeausbildung möglich</div>
+          <div class="feature-body">
+            Vorerfahrung brauchst du nicht. Du wirst Schritt für Schritt eingearbeitet, lernst den Klienten in Ruhe kennen und hast immer jemanden, den du fragen kannst.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Einarbeitung</div>
+            <div class="feature-tag">24/7-Support</div>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-label">Stellen</div>
+          <div class="feature-title">Aktuelle Jobs</div>
+          <div class="feature-body">
+            Wir suchen laufend Assistenzkräfte in verschiedenen Städten. Über die Jobportale findest du unsere aktuellen Ausschreibungen.
+          </div>
+          <div class="feature-tag-row">
+            <div class="feature-tag">Minijob</div>
+            <div class="feature-tag">Teilzeit</div>
+            <div class="feature-tag">Vollzeit</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-cta-center">
+        <a href="https://www.kleinanzeigen.de" target="_blank" class="btn btn-ghost">
+          Zu Kleinanzeigen
+        </a>
+        <a href="https://join.com" target="_blank" class="btn btn-primary">
+          Jetzt bewerben – 5 Minuten
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section">
+    <div class="max-w">
+      <div class="section-header">
+        <div class="section-eyebrow">Erfahrungen</div>
+        <h2 class="section-title">Was Klienten und Assistenten sagen</h2>
+      </div>
+
+      <div class="testimonials-row">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            „Ohne AP hätte ich das Persönliche Budget nie beantragt. Heute habe ich ein eigenes Assistenzteam und kann wieder studieren – mit ruhigem Gewissen, weil bei Problemen rund um die Uhr jemand erreichbar ist.“
+          </p>
+          <div class="testimonial-meta">
+            Klientin, 35 Jahre, Bonn
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            „Ich bin als Quereinsteigerin in die Assistenz gestartet. AP hat mich gut eingearbeitet, die Dienste auf meine Familie abgestimmt und ist auch nachts erreichbar, wenn etwas ist. So macht Arbeit mit Sinn Spaß.“
+          </p>
+          <div class="testimonial-meta">
+            Anna M., Assistenzprofi seit 2023
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section id="kontakt" class="section">
+    <div class="max-w">
+      <div class="section-header">
+        <div class="section-eyebrow">Kontakt</div>
+        <h2 class="section-title">Lass uns sprechen</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>AP AssistenzProfis GmbH</h3>
+          <ul class="contact-list">
+            <li>Maarweg 163</li>
+            <li>50825 Köln</li>
+            <li>Deutschland</li>
+          </ul>
+          <p>
+            Telefon: <a href="tel:+4922195930380">+49 221 95930380</a><br>
+            E-Mail: <a href="mailto:info@assistenzprofis.de">kontakt@assistenzprofis.de</a>
+          </p>
+          <p class="contact-note">
+            Wir melden uns in der Regel innerhalb von 1–2 Werktagen zurück.
+          </p>
+        </div>
+
+        <div>
+          <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:0.9rem;">
+            Du möchtest Klient werden oder suchst eine Stelle als Assistent? Schreib uns kurz, wer du bist und was du suchst – wir melden uns mit einem Terminvorschlag für ein Gespräch.
+          </p>
+          <p style="font-size:0.9rem; margin-bottom:0.9rem;">
+            <strong>Persönliches Budget?</strong> Wir unterstützen bei Antrag, Umsetzung und Abrechnung, damit du dich auf dein Leben konzentrieren kannst.
+          </p>
+          <button class="btn btn-primary" onclick="location.href='mailto:info@assistenzprofis.de?subject=Beratungsanfrage AP AssistenzProfis'">
+            E-Mail schreiben
+          </button>
+          <button class="btn btn-ghost" onclick="location.href='tel:+492562123456'">
+            Jetzt anrufen
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+  &copy; 2026 AP AssistenzProfis GmbH – Ziemlich beste Assistenz.  
+  <br><a href="https://assistenzprofis.de/impressum/">Impressum</a> &amp; <a href="https://assistenzprofis.de/datenschutz/">Datenschutz</a>
+</footer>
+</div>
+
+<script>
+  // Smooth scroll for internal links
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Highlight active nav link on scroll
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+
+  function onScroll() {
+    const scrollPos = window.scrollY + 120;
+    let currentId = 'home';
+    for (const sec of sections) {
+      if (scrollPos >= sec.offsetTop) {
+        currentId = sec.id;
+      }
+    }
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + currentId);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll);
+</script>
+</body>
+</html>
