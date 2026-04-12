@@ -32,29 +32,27 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs mit Auth -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
-        
-        cconst firebaseConfig = {
-  apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
-  authDomain: "assistenzprofis-webchat.firebaseapp.com",
-  projectId: "assistenzprofis-webchat",
-  storageBucket: "assistenzprofis-webchat.firebasestorage.app",
-  messagingSenderId: "295188850498",
-  appId: "1:295188850498:web:071f095a25f0b196224adb"
-};
-        };
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+  import { getAuth } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+  import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        window.auth = auth;
-        window.db = db;
-    </script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
+    authDomain: "assistenzprofis-webchat.firebaseapp.com",
+    projectId: "assistenzprofis-webchat",
+    storageBucket: "assistenzprofis-webchat.firebasestorage.app",
+    messagingSenderId: "295188850498",
+    appId: "1:295188850498:web:071f095a25f0b196224adb"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.auth = getAuth(app);
+  window.db = getFirestore(app);
+</script>
+<script type="module" src="chat.js">
+    
+</script>
     <script type="module" src="script.js"></script>
 </body>
 </html>
