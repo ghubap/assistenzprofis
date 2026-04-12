@@ -39,7 +39,7 @@
         <a href="klient.html">Klient:in werden</a>
         <a href="assistent.html">Assistent:in werden</a>
         <a href="contact.html">Kontakt</a>
-      </div>
+     
       <button class="nav-chat-btn" onclick="toggleChatPopup()">
         💬 Chat
     </button>
@@ -137,22 +137,20 @@
 </div>
   <!-- Vor </body> einfügen -->
 <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
-    
-    window.firebaseConfig = {
-        const firebaseConfig = {
-  apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
-  authDomain: "assistenzprofis-webchat.firebaseapp.com",
-  projectId: "assistenzprofis-webchat",
-  storageBucket: "assistenzprofis-webchat.firebasestorage.app",
-  messagingSenderId: "295188850498",
-  appId: "1:295188850498:web:071f095a25f0b196224adb"
-};
-    };
-    
-    const app = initializeApp(window.firebaseConfig);
-    window.db = getFirestore(app);
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+  import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
+    authDomain: "assistenzprofis-webchat.firebaseapp.com",
+    projectId: "assistenzprofis-webchat",
+    storageBucket: "assistenzprofis-webchat.firebasestorage.app",
+    messagingSenderId: "295188850498",
+    appId: "1:295188850498:web:071f095a25f0b196224adb"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  window.db = getFirestore(app);
 </script>
 </body>
 </html>
