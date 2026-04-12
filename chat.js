@@ -18,11 +18,12 @@ import {
 const auth = window.auth;
 const db = window.db;
 
-let currentMessageId = null;
 let unsubscribe = null;
 let messages = [];
+let currentMessageId = null;
 
 function formatDate(timestamp) {
+  if (!timestamp) return '';
   return new Intl.DateTimeFormat('de-DE', {
     day: '2-digit',
     month: '2-digit',
@@ -32,16 +33,23 @@ function formatDate(timestamp) {
   }).format(new Date(timestamp));
 }
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text || '';
+  return div.innerHTML;
+}
+
 async function loginUser() {
   const email = prompt('E-Mail:');
   const password = prompt('Passwort:');
+
   if (!email || !password) return;
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
+    console.error('Login-Fehler:', error);
     alert('Login fehlgeschlagen: ' + error.message);
-    console.error(error);
   }
 }
 
@@ -49,7 +57,8 @@ async function logoutUser() {
   try {
     await signOut(auth);
   } catch (error) {
-    console.error(error);
+    console.error('Logout-Fehler:', error);
+    alert('Logout fehlgeschlagen: ' + error.message);
   }
 }
 
@@ -60,74 +69,111 @@ function renderMessages() {
   container.innerHTML = '';
 
   messages.forEach((msg) => {
-    const div = document.createElement('div');
-    div.className = `message ${msg.isAdmin ? 'admin' : 'guest'} ${msg.done ? 'done' : ''}`;
-    div.dataset.id = msg.id;
+    const isGuest = !msg.isAdmin;
+    const isReply = !!msg.replyTo;
 
-    div.innerHTML = `
-      <div class="message-header">${msg.isAdmin ? 'Team' : 'Gast'}</div>
-      <div class="message-text">${msg.text}</div>
-      <div class="message-time">${formatDate(msg.timestamp)}</div>
-      ${!msg.isAdmin ? `
+    const item = document.createElement('div');
+    item.className = [
+      'message',
+      isGuest ? 'guest' : 'admin',
+      isReply ? 'reply' : '',
+      msg.done ? 'done' : '',
+      currentMessageId === msg.id ? 'selected' : ''
+    ].join(' ').trim();
+
+    item.dataset.id = msg.id;
+
+    const headerText = isReply
+      ? 'Antwort'
+      : (msg.isAdmin ? 'Team' : 'Gast');
+
+    item.innerHTML = `
+      <div class="message-header">${escapeHtml(headerText)}</div>
+      <div class="message-text">${escapeHtml(msg.text)}</div>
+      <div class="message-time">${escapeHtml(formatDate(msg.timestamp))}</div>
+      ${isGuest ? `
         <div class="message-actions">
-          <button class="btn-done" data-action="done">✓ Erledigt</button>
-          <button class="btn-delete" data-action="delete">🗑 Löschen</button>
+          <button type="button" class="btn-done" data-action="done">✓ Erledigt</button>
+          <button type="button" class="btn-delete" data-action="delete">🗑 Löschen</button>
         </div>
       ` : ''}
     `;
 
-    if (!msg.isAdmin) {
-      div.addEventListener('click', (e) => {
-        if (e.target.dataset.action === 'done' || e.target.dataset.action === 'delete') return;
+    if (isGuest) {
+      item.addEventListener('click', (e) => {
+        const action = e.target.dataset.action;
+        if (action === 'done' || action === 'delete') return;
+
         currentMessageId = msg.id;
-        document.querySelectorAll('.message').forEach(m => m.classList.remove('selected'));
-        div.classList.add('selected');
+        renderMessages();
       });
     }
 
-    const doneBtn = div.querySelector('[data-action="done"]');
+    const doneBtn = item.querySelector('[data-action="done"]');
     if (doneBtn) {
       doneBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        await updateDoc(doc(db, 'messages', msg.id), { done: true });
+        try {
+          await updateDoc(doc(db, 'messages', msg.id), { done: !msg.done });
+        } catch (error) {
+          console.error('Erledigt-Fehler:', error);
+          alert('Status konnte nicht geändert werden.');
+        }
       });
     }
 
-    const deleteBtn = div.querySelector('[data-action="delete"]');
+    const deleteBtn = item.querySelector('[data-action="delete"]');
     if (deleteBtn) {
       deleteBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        if (!confirm('Nachricht wirklich löschen?')) return;
-        await deleteDoc(doc(db, 'messages', msg.id));
+        const ok = confirm('Nachricht wirklich löschen?');
+        if (!ok) return;
+
+        try {
+          await deleteDoc(doc(db, 'messages', msg.id));
+          if (currentMessageId === msg.id) {
+            currentMessageId = null;
+          }
+        } catch (error) {
+          console.error('Lösch-Fehler:', error);
+          alert('Nachricht konnte nicht gelöscht werden.');
+        }
       });
     }
 
-    container.appendChild(div);
+    container.appendChild(item);
   });
 
   container.scrollTop = container.scrollHeight;
 }
 
-function startMessages() {
+function startRealtimeMessages() {
   if (unsubscribe) unsubscribe();
 
-  const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));
+  const q = query(
+    collection(db, 'messages'),
+    orderBy('timestamp', 'asc')
+  );
+
   unsubscribe = onSnapshot(q, (snapshot) => {
-    messages = snapshot.docs.map(docSnap => ({
+    messages = snapshot.docs.map((docSnap) => ({
       id: docSnap.id,
       ...docSnap.data()
     }));
     renderMessages();
+  }, (error) => {
+    console.error('onSnapshot-Fehler:', error);
+    alert('Firestore konnte nicht geladen werden: ' + error.message);
   });
 }
 
 async function sendReply(text) {
   await addDoc(collection(db, 'messages'), {
-    text,
+    text: text,
     timestamp: Date.now(),
     isAdmin: true,
     done: false,
-    replyTo: currentMessageId || null
+    replyTo: currentMessageId
   });
 }
 
@@ -136,10 +182,12 @@ document.getElementById('logout-btn')?.addEventListener('click', logoutUser);
 
 document.getElementById('reply-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
+
   const input = document.getElementById('reply-input');
   const text = input.value.trim();
 
   if (!text) return;
+
   if (!currentMessageId) {
     alert('Bitte zuerst eine Gast-Nachricht anklicken.');
     return;
@@ -149,10 +197,9 @@ document.getElementById('reply-form')?.addEventListener('submit', async (e) => {
     await sendReply(text);
     input.value = '';
     currentMessageId = null;
-    document.querySelectorAll('.message').forEach(m => m.classList.remove('selected'));
   } catch (error) {
-    console.error(error);
-    alert('Antwort konnte nicht gesendet werden.');
+    console.error('Antwort-Fehler:', error);
+    alert('Antwort konnte nicht gesendet werden: ' + error.message);
   }
 });
 
@@ -164,17 +211,26 @@ onAuthStateChanged(auth, (user) => {
   const noAccess = document.getElementById('no-access');
 
   if (user) {
-    loginBtn.style.display = 'none';
-    userInfo.style.display = 'flex';
-    userEmail.textContent = user.email;
-    chatContainer.style.display = 'block';
-    noAccess.style.display = 'none';
-    startMessages();
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'flex';
+    if (userEmail) userEmail.textContent = user.email || '';
+    if (chatContainer) chatContainer.style.display = 'block';
+    if (noAccess) noAccess.style.display = 'none';
+
+    startRealtimeMessages();
   } else {
-    loginBtn.style.display = 'inline-block';
-    userInfo.style.display = 'none';
-    chatContainer.style.display = 'none';
-    noAccess.style.display = 'block';
-    if (unsubscribe) unsubscribe();
+    if (loginBtn) loginBtn.style.display = 'inline-block';
+    if (userInfo) userInfo.style.display = 'none';
+    if (chatContainer) chatContainer.style.display = 'none';
+    if (noAccess) noAccess.style.display = 'block';
+
+    if (unsubscribe) {
+      unsubscribe();
+      unsubscribe = null;
+    }
+
+    messages = [];
+    currentMessageId = null;
+    renderMessages();
   }
 });
