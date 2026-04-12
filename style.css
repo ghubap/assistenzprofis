@@ -732,3 +732,121 @@ footer a {
     display: flex;
   }
 }
+/* Chat-Button in Nav */
+.nav-chat-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.nav-chat-btn:hover {
+    background: color-mix(in srgb, var(--primary), black 20%);
+    transform: translateY(-1px);
+}
+
+/* Chat-Popup */
+.chat-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+}
+
+.chat-popup-content {
+    background: white;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+}
+
+.chat-popup-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-popup-header h3 {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.chat-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-close:hover {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.popup-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #f8f9fa;
+}
+
+.popup-message-form {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup-message-form textarea {
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.popup-message-form button {
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+@media (min-height: 700px) {
+    .chat-popup-content {
+        align-self: center;
+        border-radius: 20px;
+        max-height: 600px;
+    }
+}
