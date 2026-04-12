@@ -8,155 +8,176 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-<div class="page">
+  <div class="page">
 
-  <!-- Top bar -->
-  <div class="top-bar">
-    <div class="max-w top-bar-inner">
-      <div class="logo-wrap">
-        <div class="logo-frame">
-          <img src="ap3er_orig.png" alt="AP AssistenzProfis Logo">
-        </div>
-        <div>
-          <div class="brand-text-main">AP AssistenzProfis GmbH</div>
-          <div class="brand-text-sub">
-            Ziemlich authentische Assistenz. 2016 von Betroffenen gegründet. Deutschlandweit tätig.
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="max-w top-bar-inner">
+        <div class="logo-wrap">
+          <div class="logo-frame">
+            <img src="ap3er_orig.png" alt="AP AssistenzProfis Logo">
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Nav: mischt interne Anker + Unterseiten -->
-   <nav class="nav">
-    <div class="nav-inner">
-      <div class="nav-burger" aria-label="Menü">
-        <span></span><span></span><span></span>
-      </div>
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="about.html">Über uns</a>
-        <a href="klient.html">Klient:in werden</a>
-        <a href="assistent.html">Assistent:in werden</a>
-        <a href="contact.html">Kontakt</a>
-     
-      <button class="nav-chat-btn" onclick="toggleChatPopup()">
-        💬 Chat
-    </button>
-      <div class="nav-cta">
-  <button class="nav-cta-btn" onclick="scrollToId('assistent')">
-          <span>★</span>Jobs
-        </button>
-        <button class="nav-cta-btn primary" onclick="location.href='https://www.kleinanzeigen.de/pro/ap-assistenzprofis-gmbh'" >
-          Jetzt bewerben
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="max-w hero-grid">
-      <div>
-        <div class="hero-eyebrow">Persönliche Assistenz – deutschlandweit</div>
-        <h1 class="hero-title">
-          <span>Ziemlich authentische Assistenz</span><br>
-          aus eigener Erfahrung.
-        </h1>
-        <p class="hero-text">
-          AP AssistenzProfis hilft Menschen mit körperlicher Behinderung, ein selbstbestimmtes Leben in den eigenen vier Wänden zu führen – bereits seit 2016! Gegründet von Niklas Kampmann, der aufgrund seiner Behinderung von Geburt an weiß, wie sich jede Hürde anfühlt.
-        </p>
-        <div class="hero-pills">
-          <div class="pill"><span>●</span> Seit 2016</div>
-          <div class="pill"><span>●</span> on Betroffenen gegründet</div>
-          <div class="pill"><span>●</span> deutschlandweit</div>
-        </div>
-        <div class="hero-actions">
-          <button class="btn btn-primary" onclick="location.href='contact.html'">
-            Klient:in werden
-          </button>
-          <button class="btn btn-ghost" onclick="location.href='contact.html'">
-  Assistent:in werden
-</button>
-          <div class="hero-note">
-            Wir kümmern uns um alles - du verwirklichst dich.
-          </div>
-        </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stats-card">
-          <div class="stats-label">Seit</div>
-          <div class="stats-value">2016</div>
-          <div class="stats-desc">Erfahrung im Aufbau von Assistenzteams und mit dem Persönlichen Budget.</div>
-          <div class="stats-tag">Gründung</div>
-        </div>
-        <div class="stats-card">
-          <div class="stats-label">Assistent:innen</div>
-          <div class="stats-value">250+</div>
-          <div class="stats-desc">Assistent:innen im Einsatz – von Minijob bis Vollzeit. Von Freizeitassistenz bis Alltagsassistenz</div>
-          <div class="stats-tag">Team</div>
-        </div>
-        <div class="stats-card full">
-          <div class="stats-label">von Betroffenen gegründet</div>
-          <div class="stats-value">Vom Klienten zum Profi</div>
-          <div class="stats-desc">
-            Gründer Niklas Kampmann lebt seit Geburt an mit Behinderung. Heute sorgt sein Team dafür, dass andere Menschen dieselbe Freiheit erleben.
-          </div>
-          <div class="stats-icon-row">
-            <div class="stats-icon">♥</div>
-            <div style="font-size:0.86rem;color:var(--text-muted);">
-              Authentische Assistenz statt Theorie – wir wissen aus eigener Praxis, was wirklich zählt.
+          <div>
+            <div class="brand-text-main">AP AssistenzProfis GmbH</div>
+            <div class="brand-text-sub">
+              Ziemlich authentische Assistenz. 2016 von Betroffenen gegründet. Deutschlandweit tätig.
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  
-  <footer>
-    &copy; 2026 AP AssistenzProfis GmbH – Ziemlich authentische Assistenz.
-    <br><a href="https://assistenzprofis.de/impressum/" target="_blank" rel="noopener">Impressum</a> &amp;
-    <a href="https://assistenzprofis.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
-  </footer>
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <div class="nav-burger" aria-label="Menü">
+          <span></span><span></span><span></span>
+        </div>
 
-</div>
+        <div class="nav-links">
+          <a href="index.html" class="active">Home</a>
+          <a href="about.html">Über uns</a>
+          <a href="klient.html">Klient:in werden</a>
+          <a href="assistent.html">Assistent:in werden</a>
+          <a href="contact.html">Kontakt</a>
+          <button class="nav-chat-btn" onclick="toggleChatPopup()" type="button">💬 Chat</button>
+        </div>
+
+        <div class="nav-cta">
+          <button class="nav-cta-btn" onclick="scrollToId('assistent')" type="button">
+            <span>★</span>Jobs
+          </button>
+          <button
+            class="nav-cta-btn primary"
+            onclick="location.href='https://www.kleinanzeigen.de/pro/ap-assistenzprofis-gmbh'"
+            type="button"
+          >
+            Jetzt bewerben
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="max-w hero-grid">
+        <div>
+          <div class="hero-eyebrow">Persönliche Assistenz – deutschlandweit</div>
+          <h1 class="hero-title">
+            <span>Ziemlich authentische Assistenz</span><br>
+            aus eigener Erfahrung.
+          </h1>
+          <p class="hero-text">
+            AP AssistenzProfis hilft Menschen mit körperlicher Behinderung, ein selbstbestimmtes Leben
+            in den eigenen vier Wänden zu führen – bereits seit 2016! Gegründet von Niklas Kampmann,
+            der aufgrund seiner Behinderung von Geburt an weiß, wie sich jede Hürde anfühlt.
+          </p>
+
+          <div class="hero-pills">
+            <div class="pill"><span>●</span> Seit 2016</div>
+            <div class="pill"><span>●</span> von Betroffenen gegründet</div>
+            <div class="pill"><span>●</span> deutschlandweit</div>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="location.href='contact.html'" type="button">
+              Klient:in werden
+            </button>
+            <button class="btn btn-ghost" onclick="location.href='contact.html'" type="button">
+              Assistent:in werden
+            </button>
+            <div class="hero-note">
+              Wir kümmern uns um alles - du verwirklichst dich.
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-label">Seit</div>
+            <div class="stats-value">2016</div>
+            <div class="stats-desc">
+              Erfahrung im Aufbau von Assistenzteams und mit dem Persönlichen Budget.
+            </div>
+            <div class="stats-tag">Gründung</div>
+          </div>
+
+          <div class="stats-card">
+            <div class="stats-label">Assistent:innen</div>
+            <div class="stats-value">250+</div>
+            <div class="stats-desc">
+              Assistent:innen im Einsatz – von Minijob bis Vollzeit. Von Freizeitassistenz bis Alltagsassistenz.
+            </div>
+            <div class="stats-tag">Team</div>
+          </div>
+
+          <div class="stats-card full">
+            <div class="stats-label">von Betroffenen gegründet</div>
+            <div class="stats-value">Vom Klienten zum Profi</div>
+            <div class="stats-desc">
+              Gründer Niklas Kampmann lebt seit Geburt an mit Behinderung. Heute sorgt sein Team dafür,
+              dass andere Menschen dieselbe Freiheit erleben.
+            </div>
+            <div class="stats-icon-row">
+              <div class="stats-icon">♥</div>
+              <div style="font-size:0.86rem;color:var(--text-muted);">
+                Authentische Assistenz statt Theorie – wir wissen aus eigener Praxis, was wirklich zählt.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2026 AP AssistenzProfis GmbH – Ziemlich authentische Assistenz.
+      <br>
+      <a href="https://assistenzprofis.de/impressum/" target="_blank" rel="noopener noreferrer">Impressum</a>
+      &amp;
+      <a href="https://assistenzprofis.de/datenschutz/" target="_blank" rel="noopener noreferrer">Datenschutz</a>
+    </footer>
+  </div>
+
+  <!-- Chat-Popup -->
   <div id="chat-popup" class="chat-popup" style="display: none;">
     <div class="chat-popup-content">
-        <div class="chat-popup-header">
-            <h3>Live-Chat</h3>
-            <button class="chat-close" onclick="toggleChatPopup()">&times;</button>
-        </div>
-        <div id="popup-chat-messages" class="popup-messages"></div>
-        <form id="popup-chat-form" class="popup-message-form">
-            <textarea id="popup-message-input" placeholder="Ihre Nachricht..." required></textarea>
-            <button type="submit">Senden</button>
-        </div>
+      <div class="chat-popup-header">
+        <h3>Live-Chat</h3>
+        <button class="chat-close" onclick="toggleChatPopup()" type="button">&times;</button>
+      </div>
+
+      <div id="popup-chat-messages" class="popup-messages"></div>
+
+      <form id="popup-chat-form" class="popup-message-form">
+        <textarea id="popup-message-input" placeholder="Ihre Nachricht..." required></textarea>
+        <button type="submit">Senden</button>
+      </form>
     </div>
-</div>
-<script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-  import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
+  </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
-    authDomain: "assistenzprofis-webchat.firebaseapp.com",
-    projectId: "assistenzprofis-webchat",
-    storageBucket: "assistenzprofis-webchat.firebasestorage.app",
-    messagingSenderId: "295188850498",
-    appId: "1:295188850498:web:071f095a25f0b196224adb"
-  };
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
+      authDomain: "assistenzprofis-webchat.firebaseapp.com",
+      projectId: "assistenzprofis-webchat",
+      storageBucket: "assistenzprofis-webchat.firebasestorage.app",
+      messagingSenderId: "295188850498",
+      appId: "1:295188850498:web:071f095a25f0b196224adb"
+    };
 
-  window.db = db;
-  window.fsCollection = collection;
-  window.fsAddDoc = addDoc;
-  window.fsQuery = query;
-  window.fsOrderBy = orderBy;
-  window.fsOnSnapshot = onSnapshot;
-</script>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.db = db;
+    window.fsCollection = collection;
+    window.fsAddDoc = addDoc;
+    window.fsQuery = query;
+    window.fsOrderBy = orderBy;
+    window.fsOnSnapshot = onSnapshot;
+  </script>
 </body>
 </html>
