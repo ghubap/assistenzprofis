@@ -40,6 +40,9 @@
         <a href="assistent.html">Assistent:in werden</a>
         <a href="contact.html">Kontakt</a>
       </div>
+      <button class="nav-chat-btn" onclick="toggleChatPopup()">
+        💬 Chat
+    </button>
       <div class="nav-cta">
   <button class="nav-cta-btn" onclick="scrollToId('assistent')">
           <span>★</span>Jobs
@@ -118,6 +121,19 @@
     <a href="https://assistenzprofis.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
   </footer>
 
+</div>
+  <div id="chat-popup" class="chat-popup" style="display: none;">
+    <div class="chat-popup-content">
+        <div class="chat-popup-header">
+            <h3>Live-Chat</h3>
+            <button class="chat-close" onclick="toggleChatPopup()">&times;</button>
+        </div>
+        <div id="popup-chat-messages" class="popup-messages"></div>
+        <form id="popup-chat-form" class="popup-message-form">
+            <textarea id="popup-message-input" placeholder="Ihre Nachricht..." required></textarea>
+            <button type="submit">Senden</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>
