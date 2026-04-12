@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistenzprofis - Chat-Verwaltung</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Assistenzprofis - Chat-Verwaltung</h1>
+            <div id="auth-status">
+                <button id="login-btn">Login</button>
+                <div id="user-info" style="display: none;">
+                    <span id="user-email"></span>
+                    <button id="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+        
+        <div id="chat-container" style="display: none;">
+            <div id="chat-messages" class="messages admin"></div>
+            <form id="reply-form" class="message-form">
+                <textarea id="reply-input" placeholder="Antwort schreiben..." required></textarea>
+                <button type="submit">Antworten</button>
+            </form>
+        </div>
+        
+        <div id="no-access" style="display: none;">
+            <p>Bitte logge dich ein, um auf die Chat-Verwaltung zuzugreifen.</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs mit Auth -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
+        
+        cconst firebaseConfig = {
+  apiKey: "AIzaSyDRG5nR7ICA5Z8J_DC0QwzrqDHGY103Yxc",
+  authDomain: "assistenzprofis-webchat.firebaseapp.com",
+  projectId: "assistenzprofis-webchat",
+  storageBucket: "assistenzprofis-webchat.firebasestorage.app",
+  messagingSenderId: "295188850498",
+  appId: "1:295188850498:web:071f095a25f0b196224adb"
+};
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        window.auth = auth;
+        window.db = db;
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
